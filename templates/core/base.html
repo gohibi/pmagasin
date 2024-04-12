@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion</title>
+    <link rel="shortcut icon" type="image" href="/static/assets/image/logo2.png">
+    
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- bootstrap links -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+   
+    <!-- bootstrap links -->
+
+    <!-- fonts links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- fonts links -->
+
+    <!-- static links -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"> 
+    
+    
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/font-awesome-6.2.0-all.min.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"> 
+    <!-- static links -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/js/dashboard.js' %}"></script>
+    <style>
+      .separator{
+              border-top: 1px solid #333;
+              margin: 35px 0;
+          }
+    .card-img-top{
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+    </style>
+</head>
+<body>
+  <!-- background: #1c1c50; #0d6efd;-->
+    <!-- top navbar -->
+    <div class="top-navbar">
+        <div class="top-icons">
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="other-links">
+            <div class="other-links">
+              <a href="{% url 'core:dashboard' %}"><i class="fa-solid fa-user"></i></a>
+              <a href="{% url 'core:cart' %}"><i class="fa-solid fa-cart-shopping"><span style="top: -5px; left: 15px; height: 20px; min-width: 20px;" id="cart-items-count" class="justify-content-center border border-primary text-items-center rounded-circle px-1 m-1 bg-primary text-light">{{ request.session.cart_data_obj|length }}</span></i></a>
+              <a href="{% url 'core:wishlist' %}" class="text-decoration-none"><i class="fa-solid fa-heart"><span style="top: -5px; left: 15px; height: 20px; min-width: 20px;"  class="justify-content-center border border-primary text-items-center rounded-circle px-1 m-1 bg-primary text-light">{{ wishlist.count }}</span></i></a>
+              
+          </div> 
+        </div>
+    </div>
+    <!-- top navbar -->
+
+    <div class="home-section">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg" id="navbar">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"><img src="{% static './image/logo.png' %}" alt="" width="180px"></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span><i class="fa-solid fa-bars" style="color: white;"></i></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'core:index' %}">Accueil</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'core:products' %}">Nos Produits</a>
+                  </li>
+                  <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Categories
+                    </a>
+                    
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #1c1c50;">
+                      
+                      <li><a class="dropdown-item" href="#">T-Shirts</a></li>
+                      <li><a class="dropdown-item" href="#">Sweats à capuche</a></li>
+                      <li><a class="dropdown-item" href="#">Pantalons</a></li>
+                      <li><a class="dropdown-item" href="#">Chaussures</a></li>
+                      <li><a class="dropdown-item" href="#">Montres</a></li>
+                      <li><a class="dropdown-item" href="#">Lunettes</a></li>
+                    </ul>
+                  </li> -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="about.html">A propos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contactez nous</a>
+                  </li>
+                </ul>
+               
+                <!-- <form class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit" id="search-btn">Recherche</button>
+                </form> -->
+                <div class="d-flex">
+                  
+                  <button id="btn-login"><a href="">S'enregister</a></button>
+                  <button id="btn-signup"><a href="">Connexion</a></button>
+                </div>
+                
+           
+              </div>
+            </div>
+          </nav>
+          
+          <!-- <section class="home">
+            <div class="content">
+                <h3>Les produits 
+                    <br> <span>100% de qualité</span>
+                </h3>
+                <p>Les produits que vous désirez à moindre coût!</p>
+            </div>
+            <div class="img">
+                <img src="{% static '/static/assets/image/b2.png' %}" alt="">
+            </div>
+        </section> -->
+    </div>
+        <!-- navbar -->
+
+{% if messages %}
+{% for message in messages%}
+<div class="alert alert-{{message.tags}}">
+    <strong>{{ message }}</strong>
+</div>
+
+{% endfor %}
+{% endif %}
+<script>
+setTimeout(()=>{
+    $(".alert").alert("close")
+},3000)
+</script>
+{% block content %}
+
+
+{% endblock %}
+ 
+
+
+<!-- footer -->
+<footer id="footer" style="margin-top: 40px;">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 footer-content">
+                    <h3>Fashion</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, hic?</p>
+                    <p>
+                        Karcahi <br>
+                        Sindh <br>
+                        Pakistan <br>
+                    </p>
+                    <strong><i class="fas fa-phone"></i> Phone: <strong>+000000000000000</strong></strong><br>
+                    <strong><i class="fa-solid fa-envelope"></i> Email: <strong>example@gmail.com</strong></strong>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Usefull Links</h4>
+                    <ul>
+                      <li><a href="">Accueil</a></li>
+                      <li><a href="">A propos</a></li>
+                      <li><a href="">Contacts</a></li>
+                      <li><a href="#">Services</a></li>
+    
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Nos Services</h4>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi, rem!</p>
+                    <ul>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Montres intelligentes</a></li>
+                        <li><a href="#">Airpods</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Nos reseaux sociaux</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, ad?</p>
+                    <div class="socail-links mt-3">
+                        <!-- <a href="#" class="twiiter"><i class="fa-brands fa-twitter"></i></a> -->
+                        <a href="#" class="twiiter"><i class="fa-brands fa-facebook-f"></i></a>
+                        <!-- <a href="#" class="twiiter"><i class="fa-brands fa-google-plus"></i></a> -->
+                        <a href="#" class="twiiter"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="twiiter"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container py-4">
+        <div class="copyright">
+            &copy; Copyright <strong>Fashion</strong>.All Rights Reserved
+        </div>
+        <div class="credits">
+            Designed By <a href="#"></a>
+        </div>
+    </div>
+    </footer>
+    <!-- footer -->
+    
+    <a href="#" class="arrow"><i><img src="{% static './image/up-arrow.png' %}" alt="" width="50px"></i></a>
+    
+        
+        <script src="{% static 'assets/js/script.js' %}"></script>
+        
+       
+        <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <script type="text/javaScript">
+          var swiper = new Swiper(".swiper_thumb", {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        speed: 300,
+        loop: true,
+        freeMode: true,
+        watchSlidesProgress: true,
+        ClickAble: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+      var swiper2 = new Swiper(".swiper_large_preview", {
+        spaceBetween: 10,
+        slidesPerView: 1,
+        // speed: 300,
+        speed: 0,
+        loop: true,
+        // freeMode: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+      </script>
+    </body>
+    </html>

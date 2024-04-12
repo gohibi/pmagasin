@@ -1,0 +1,113 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <br/>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm" method="GET">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                           <i class="fa-solid fa-magnifying-glass fa-2xl"></i>
+                        </div>
+                        <div class="col">
+                            <input type="search" name="recherche" id="" placeholder="Recherchez le produit que vous voulez" class="form-control form-control-lg form-control-borderless">
+                        </div>           
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-primary" type="submit">Recherche</button>
+                        </div>
+                                      
+                    </div>
+                </form>
+        </div>
+                            
+    </div>
+</div>
+
+<div class="separator"></div>
+<div class="container" id="top-cards">
+    <div class="row">
+        {% for categorie in categories %}
+        
+        <div class="col-md-4 py-3 mb-2 py-md-0">
+            <a href="{% url 'core:category-product' categorie.cid %}">
+            <div class="card" style="background-color: #a9a9a926;">
+              <img src="{{ categorie.image.url }}" alt="">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">{{categorie.title}}</h5>
+                    <p>{{categorie.categorie.count}} Produit{{categorie.categorie.count|pluralize }}</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        
+        {%endfor%}
+        <!-- <div class="col-md-3 py-3 py-md-0">
+            <div class="card" style="background-color: #a9a9a926;">
+                <img src="./image/topcard2.png" alt="">
+                <div class="card-img-overlay">
+                    <h5 class="card-titel">Nike Shoes</h5>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, ratione!</p>
+                    <p><strong>$150.10 <strike>$200.10</strike></strong></p>
+                    <button>Order Now</button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+<div class="container" id="product-cards">
+    <h1 class="text-center text-uppercase">produits</h1>
+    <div class="row" style="margin-top: 30px;">
+        {% for product in products %}
+        <div class="col-md-3 py-3 py-md-0">
+            <div class="card d-flex flex-fill flex-column">
+                <img src="{{product.image.url }}" alt="" class="card-img-top">
+                <div class="card-body">
+                    <h3 class="card-title">{{product.title}}</h3>
+                    <p>{{product.description}}</p>
+                    <div class="d-flex mb-1">
+                        <h5 class="fw-bolder text text-danger mb-3 fs-5 current-product-price-{{product.id}}">{{product.price}}</h5><span class="mx-1">Fcfa</span>
+                    </div>
+                    
+                    <a href="{% url 'core:detail-product' slug=product.slug pid=product.pid %}" class="btn btn-primary text-decoration-none">Voir +</a>
+
+                    <input type="hidden" class="product-quantity-{{product.id}}" value="1"  id="product-quantity">
+
+                    <input type="hidden" class="product-pid-{{product.id}}"    value="{{ product.pid }}">
+                    <input type="hidden" class="product-image-{{ product.id}}" value="{{ product.image.url }}" >
+                    <input type="hidden" class="product-title-{{ product.id}}" value="{{ product.title }}" >
+                    <input type="hidden" class="product-id-{{ product.id}}"    value="{{ product.id }}" >
+
+                    <button id="add-to-cart-btn" data-index="{{product.id}}" class="btn btn-info text-decoration-none ajouter add-to-cart-btn">Ajouter</button>
+                    <a href="" class="add-to-wishlist" data-product-item="{{product.id}}"><i class="far fa-heart" style="font-size:18px;color:red"></i></a>
+                </div>
+                
+            </div>
+        </div>
+        {%  endfor %}
+    </div>
+</div>
+
+<!-- <div class="row mt-3">
+    <div class="col-md-3 offset-md-4">
+        <ul class="pagination">
+            {% if products.has_previous %}
+            <li class="page-item">
+                <a href="?page={{products.previous_page_number}}" class="page-link text-decoration-none text-uppercase">precedent</a>
+            </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <a href="" class="page-link">{{products.number}}</a>
+            </li>
+
+            {% if products.has_next %}
+            <li class="page-item">
+                <a href="?page={{products.next_page_number}}" class="page-link text-decoration-none text-uppercase">suivant</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div> -->
+{% endblock %}

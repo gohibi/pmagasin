@@ -1,0 +1,61 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'assets/css/wishlist.css' %}">
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+
+
+	<div class="cart-wrap">
+		<div class="container">
+	        <div class="row">
+			    <div class="col-md-12">
+			        <div class="main-heading mb-10">My wishlist</div>
+			        <div class="table-wishlist">
+				        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+				        	<thead>
+					        	<tr>
+					        		<th width="45%">Product Name</th>
+					        		<th width="15%">Unit Price</th>
+					        		<th width="15%">Stock Status</th>
+					        		<th width="15%"></th>
+					        		<th width="10%"></th>
+					        	</tr>
+					        </thead>
+					        <tbody class="tbody-text">
+                                {% for w in wishlist %}
+					        	<tr>
+					        		<td width="45%">
+					        			<div class="display-flex align-center">
+		                                    <div class="img-product">
+		                                        <img src="{{w.product.image.url }}" alt="" class="mCS_img_loaded">
+		                                    </div>
+                                            <a href="{% url 'core:detail-product' slug=w.product.slug pid=w.product.pid %}"></a>
+		                                    <div class="name-product">
+		                                       {{w.product.title }}
+		                                    </div>
+	                                    </div>
+	                                </td>
+					        		<td width="15%" class="price current-product-price-{{w.product.id}}">{{w.product.price}}</td>
+                                    
+                                    <td><span>{% if w.product.in_stock %} En stock  {% else %} En rupture de stock {% endif %} </span></td>
+                                    
+                                    <input type="hidden" class="product-quantity-{{w.product.id}}" value="1"  id="product-quantity">
+                                    <input type="hidden" class="product-pid-{{w.product.id}}"    value="{{ w.product.pid }}">
+                                    <input type="hidden" class="product-image-{{ w.product.id}}" value="{{ w.product.image.url }}" >
+                                    <input type="hidden" class="product-title-{{ w.product.id}}" value="{{ w.product.title }}" >
+                                    <input type="hidden" class="product-id-{{ w.product.id}}"    value="{{ w.product.id }}" >
+
+					        		<td width="15%"><button  data-index="{{w.product.id}}" class="round-black-btn small-btn add-to-cart-btn">Add to Cart</button></td>
+					        		<td width="10%" class="text-center"><button data-wishlist-product="{{w.id}}" class="trash-icon remove-to-wishlist"><i class="far fa-trash-alt "></i></button></td>
+					        	</tr>
+                                {% endfor %}
+					        	
+				        	</tbody>
+				        </table>
+				    </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+	

@@ -1,0 +1,89 @@
+<div class="container-fluid" id="cart-list">
+    <div class="row">
+        <aside class="col-lg-9">
+             <p class="text-muted small fs-5">Vous avez <span class="text-danger fw-bolder">{{totalitems}} produit{{totalitems|pluralize}}</span> dans votre panier</p>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted bg-primary">
+                            <tr class="small text-uppercase text-light">
+                                <th scope="col">Product</th>
+                                <th scope="col" width="120">Quantity</th>
+                                <th scope="col" width="120">Price</th>
+                                <th scope="col" width="120">Subtotal</th>
+                                <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for product_id,item in cart_data.items %}
+                            <tr>
+
+                                <td>
+                                    <p class="info"> <a href="#" class="title-xs text-dark " data-abc="true">{{item.title}}</a>
+                                       
+                                    </p>
+                                    <div class="itemside align-items-center">
+                                        <div class="aside"><img src="{{item.image}}" class="img-sm"></div>
+                                       
+                                    </div>
+
+                                   
+                                </td>
+                                <td> 
+                                    <input type="number" class="form-control product-quantity-{{product_id}}" value="{{item.quantity}}">
+                                </td>
+                                <td>
+                                    <div class="price-wrap"> <var class="price">{{item.price}} fcfa</var>  </div> 
+                                    <!-- <small class="text-muted"> $9.20 each </small> -->
+                                </td>
+                                <td>
+                                    <div class="price-wrap"> <var class="price">{% widthratio item.price 1 item.quantity %} fcfa </var>  </div> 
+                                    <!-- <small class="text-muted"> $9.20 each </small> -->
+                                </td>
+                                <td class="text-right d-none d-md-block">
+                                     <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"><i class="fa fa-heart"></i></a>
+                                     <button type="button" class="btn btn-light edit-product" data-product="{{product_id}}"><i class="fas fa-edit"></i></button> 
+                                    <button type="button" class="btn btn-light remove-product" data-product="{{product_id}}" > Supprimer</button>
+                                </td>
+                            </tr>
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </aside>
+        <aside class="col-lg-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group"> <label>Have coupon?</label>
+                            <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <dl class="dlist-align">
+                        <dt>Total Subtotal:</dt>
+                        <dd class="text-right ml-3">{{cart_total_amount|floatformat:0}} fcfa</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Discount:</dt>
+                        <dd class="text-right text-danger ml-3">- $10.00</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Total de l'achat:</dt>
+                        <dd class="text-right text-dark b ml-3"><strong>{{cart_total_amount|floatformat:0}}  fcfa</strong></dd>
+                    </dl>
+                    <!-- <hr> <a href="{% url 'core:checkout' %}" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Purchase </a> <a href="#" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a> -->
+                    {% if totalitems %}
+                    <a href="{% url 'core:checkout' %}" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Checkout </a>
+                    {% endif %}
+                     <a href="{% url 'core:products' %}" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

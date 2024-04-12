@@ -1,0 +1,249 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    
+</head>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-4 pb-5">
+            <!-- Account Sidebar-->
+            <div class="author-card pb-3">
+                <div class="author-card-cover" style="background-image: url(https://bootdey.com/img/Content/flores-amarillas-wallpaper.jpeg);"><a class="btn btn-style-1 btn-white btn-sm" href="#" data-toggle="tooltip" title="" data-original-title="You currently have 290 Reward points to spend"><i class="fa fa-award text-md"></i>&nbsp;290 points</a></div>
+                <div class="author-card-profile">
+                    <div class="author-card-avatar"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Daniel Adams">
+                    </div>
+                    <div class="author-card-details">
+                        <h5 class="author-card-name text-lg">Daniel Adams</h5><span class="author-card-position">Joined February 06, 2017</span>
+                    </div>
+                </div>
+            </div>
+            <div class="wizard">
+                <nav class="list-group list-group-flush">
+                    <a class="list-group-item" href="#orders">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div><i class="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                <div class="d-inline-block font-weight-medium text-uppercase">Orders List</div>
+                            </div><span class="badge badge-secondary">6</span>
+                        </div>
+                    </a>
+                    <a class="list-group-item " href="#profile"><i class="fe-icon-user text-muted"></i>Profile Settings</a>
+                    <a class="list-group-item" href="#addresses"><i class="fe-icon-map-pin text-muted"></i>Addresses</a>
+                    <a class="list-group-item" href="#track" target="">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div><i class="fe-icon-heart mr-1 text-muted"></i>
+                                <div class="d-inline-block font-weight-medium text-uppercase">Track my order</div>
+                            </div><span class="badge badge-secondary">3</span>
+                        </div>
+                    </a>
+                </nav>
+            </div>
+        </div>
+        <!-- Profile Settings-->
+        <div class="col-lg-8 pb-5 content" id="profile" style="display: none;">
+            <form class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-fn">First Name</label>
+                        <input class="form-control" type="text" id="account-fn" value="Daniel" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-ln">Last Name</label>
+                        <input class="form-control" type="text" id="account-ln" value="Adams" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-email">E-mail Address</label>
+                        <input class="form-control" type="email" id="account-email" value="daniel.adams@example.com" disabled="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-phone">Phone Number</label>
+                        <input class="form-control" type="text" id="account-phone" value="+7 (805) 348 95 72" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-pass">New Password</label>
+                        <input class="form-control" type="password" id="account-pass">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-confirm-pass">Confirm Password</label>
+                        <input class="form-control" type="password" id="account-confirm-pass">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <hr class="mt-2 mb-3">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="custom-control custom-checkbox d-block">
+                            <input class="custom-control-input" type="checkbox" id="subscribe_me" checked="">
+                            <label class="custom-control-label" for="subscribe_me">Subscribe me to Newsletter</label>
+                        </div>
+                        <button class="btn btn-style-1 btn-primary" type="button" data-toast="" data-toast-position="topRight" data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-8 pb-5 content" id="orders" style="display: none;" >
+            <div class="d-flex justify-content-end pb-3">
+                <div class="form-inline">
+                    <label class="text-muted mr-3" for="order-sort">Sort Orders</label>
+                    <select class="form-control" id="order-sort">
+                        <option>All</option>
+                        <option>Delivered</option>
+                        <option>In Progress</option>
+                        <option>Delayed</option>
+                        <option>Canceled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Date Purchased</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a class="navi-link" href="#order-details" data-toggle="modal">78A643CD409</a></td>
+                            <td>August 08, 2017</td>
+                            <td><span class="badge badge-danger m-0">Canceled</span></td>
+                            <td><span>$760.50</span></td>
+                        </tr>
+                        <tr>
+                            <td><a class="navi-link" href="#order-details" data-toggle="modal">34VB5540K83</a></td>
+                            <td>July 21, 2017</td>
+                            <td><span class="badge badge-info m-0">In Progress</span></td>
+                            <td>$315.20</td>
+                        </tr>
+                        <tr>
+                            <td><a class="navi-link" href="#order-details" data-toggle="modal">112P45A90V2</a></td>
+                            <td>June 15, 2017</td>
+                            <td><span class="badge badge-warning m-0">Delayed</span></td>
+                            <td>$1,264.00</td>
+                        </tr>
+                        <tr>
+                            <td><a class="navi-link" href="#order-details" data-toggle="modal">28BA67U0981</a></td>
+                            <td>May 19, 2017</td>
+                            <td><span class="badge badge-success m-0">Delivered</span></td>
+                            <td>$198.35</td>
+                        </tr>
+                        <tr>
+                            <td><a class="navi-link" href="#order-details" data-toggle="modal">502TR872W2</a></td>
+                            <td>April 04, 2017</td>
+                            <td><span class="badge badge-success m-0">Delivered</span></td>
+                            <td>$2,133.90</td>
+                        </tr>
+                        <tr>
+                            <td><a class="navi-link" href="#order-details" data-toggle="modal">47H76G09F33</a></td>
+                            <td>March 30, 2017</td>
+                            <td><span class="badge badge-success m-0">Delivered</span></td>
+                            <td>$86.40</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-8 pb-5 content" id="addresses" style="display: none;">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<h6 class="mt-3 mb-2 text-primary">Address</h6>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="Street">Street</label>
+					<input type="name" class="form-control" id="Street" placeholder="Enter Street">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="ciTy">City</label>
+					<input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="sTate">State</label>
+					<input type="text" class="form-control" id="sTate" placeholder="Enter State">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="zIp">Zip Code</label>
+					<input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+				</div>
+			</div>
+		</div>
+        <div class="card col-lg-8 pb-5 content" id="track" style="display: none;">
+            <div class="title">Purchase Reciept</div>
+            <div class="info">
+                <div class="row">
+                    <div class="col-7">
+                        <span id="heading">Date</span><br>
+                        <span id="details">10 October 2018</span>
+                    </div>
+                    <div class="col-5 pull-right">
+                        <span id="heading">Order No.</span><br>
+                        <span id="details">012j1gvs356c</span>
+                    </div>
+                </div>      
+            </div>      
+            <div class="pricing">
+                <div class="row">
+                    <div class="col-9">
+                        <span id="name">BEATS Solo 3 Wireless Headphones</span>  
+                    </div>
+                    <div class="col-3">
+                        <span id="price">&pound;299.99</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <span id="name">Shipping</span>
+                    </div>
+                    <div class="col-3">
+                        <span id="price">&pound;33.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <div class="row">
+                    <div class="col-9"></div>
+                    <div class="col-3"><big>&pound;262.99</big></div>
+                </div>
+            </div>
+            <div class="tracking">
+                <div class="title">Tracking Order</div>
+            </div>
+            <div class="progress-track">
+                <ul id="progressbar">
+                    <li class="step0 active " id="step1">Ordered</li>
+                    <li class="step0 active text-center" id="step2">Shipped</li>
+                    <li class="step0 active text-right" id="step3">On the way</li>
+                    <li class="step0 text-right" id="step4">Delivered</li>
+                </ul>
+            </div>
+            
+
+            <div class="footer">
+                <div class="row">
+                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/YBWc55P.png"></div>
+                    <div class="col-10">Want any help? Please &nbsp;<a> contact us</a></div>
+                </div>
+                
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

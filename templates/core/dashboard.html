@@ -1,0 +1,273 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+</head>
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-4 pb-5">
+            <!-- Account Sidebar -->
+            <div class="author-card pb-3">
+                <!-- Replace the background image and avatar image URLs with your own -->
+                <div class="author-card-cover bg-primary">
+                    <!-- <a class="btn btn-style-1 btn-white btn-sm" href="#" data-toggle="tooltip" title="" data-original-title="You currently have 290 Reward points to spend">
+                        <i class="fa fa-award text-md"></i>&nbsp;290 points
+                    </a> -->
+                </div>
+                <div class="author-card-profile">
+                    
+                    <div class="img-fluid">
+                        <img src="{{ profile.image.url }}" class="img-thumbnail rounded-circle" style="height: 90px; width: 90px;" alt="Daniel Adams">
+                    </div>
+                    <div class="author-card-details">
+                        <h5 class="author-card-name text-lg ">{{profile.user.username|capfirst}}</h5>
+                        <span class="author-card-position">Joined {{profile.user.date_joined|date:"d M Y  G:i"}}</span>
+                    </div>
+                
+                </div>
+            </div>
+            <!-- Sidebar Navigation -->
+            <div class="wizard">
+                <nav class="list-group list-group-flush">
+                    <a class="list-group-item " href="#dashboard">Dashboard</a>
+                    <a class="list-group-item" href="#profile">Profile Settings</a>
+                    <a class="list-group-item" href="#orders">Orders List</a>
+                    <a class="list-group-item" href="#addresses">Addresses</a>
+                    <a class="list-group-item" href="#track">Track my order</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-lg-8 pb-5">
+            <div class="content active" id="dashboard">
+                <div class="card" style="width: auto;">
+                    <div class="card-header">
+                        <h3 class="mb-0">Hello {{profile.user.username }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                            Quaerat dicta commodi eveniet labore architecto voluptatum eaque rem <br>
+                             consequuntur alias, quae tempore ullam tempora ipsum ipsa id? Cum aspernatur 
+                             quae quasi.</p>
+                    </div>
+                </div>
+                <br>
+                <!-- <div class="mt-0">
+                    {{month }}
+                    {{total_orders}}
+                </div> -->
+                <div>
+                    <canvas id="myChart"></canvas>
+                  </div>
+              
+            </div>
+            <div class="content" id="profile">
+                <form class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-fn">Full Name</label>
+                            <input class="form-control" type="text" id="account-fn" value="{{profile.full_name|capfirst}}" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-ln">Bio</label>
+                            <input class="form-control" type="text" id="account-ln" value="{{profile.bio}}" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-email">E-mail Address</label>
+                            <input class="form-control" type="email" id="account-email" value="{{profile.user.email}}" disabled="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-phone">Phone Number</label>
+                            <input class="form-control" type="text" id="account-phone" value="{{profile.phone}}" required="">
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-pass">New Password</label>
+                            <input class="form-control" type="password" id="account-pass">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-confirm-pass">Confirm Password</label>
+                            <input class="form-control" type="password" id="account-confirm-pass">
+                        </div>
+                    </div> -->
+                    <div class="col-12">
+                        <hr class="mt-2 mb-3">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                            <!-- <div class="custom-control custom-checkbox d-block">
+                                <input class="custom-control-input" type="checkbox" id="subscribe_me" checked="">
+                                <label class="custom-control-label" for="subscribe_me">Subscribe me to Newsletter</label>
+                            </div> -->
+                            <button class="btn btn-style-1 btn-primary d-block" type="button" data-toast="" data-toast-position="topRight" data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content" id="orders">
+                <!-- Orders List Content -->
+                <!-- Replace the table content with your own -->
+                <div class="d-flex justify-content-end pb-3">
+                    <div class="form-inline">
+                        <label class="text-muted mr-3" for="order-sort">Sort Orders</label>
+                        <select class="form-control" id="order-sort">
+                            <option>All</option>
+                            <option>Delivered</option>
+                            <option>In Progress</option>
+                            <option>Delayed</option>
+                            <option>Canceled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Status Paid</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>INVOICE_NO-{{order.id}}</td>
+                                <td>{{order.price}}</td>
+                                <td>{{order.date_order|date:"d M Y G:i"}}</td>
+                                <td>{{order.product_status|title}}</td>
+                                {% if order.status_payment == True %}
+                                <td><i class="fa-solid fa-check fa-xl text-success"></i></td>
+                                {% else %}
+                                <td><i class="fa-solid fa-xmark fa-xl text-warning"></i></i></td>
+                                {% endif %}
+                                <td><a class="btn-lg d-block badge m-0 text-decoration-none text-uppercase text-primary" href="{% url 'core:order-detail' order.id %}"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
+                            </tr>
+                         {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content" id="addresses">
+                <form class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-fn">First Name</label>
+                            <input class="form-control" type="text" id="account-fn" value="{{request.user.username|capfirst}}" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-ln">Address</label>
+                            <input class="form-control" type="text" id="account-ln" value="{{addresses.address }}" required="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content" id="track">
+                <div class="title text-uppercase fw-bold fs-3">Purchase Reciept</div>
+                <div class="info">
+                    <div class="row">
+                        <div class="col-7">
+                            <span id="heading">Date</span><br>
+                            <span id="details">10 October 2018</span>
+                        </div>
+                        <div class="col-5 pull-right">
+                            <span id="heading">Order No.</span><br>
+                            <span id="details">012j1gvs356c</span>
+                        </div>
+                    </div>      
+                </div>      
+                <div class="pricing">
+                    <div class="row">
+                        <div class="col-9">
+                            <span id="name">BEATS Solo 3 Wireless Headphones</span>  
+                        </div>
+                        <div class="col-3">
+                            <span id="price">&pound;299.99</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-9">
+                            <span id="name">Shipping</span>
+                        </div>
+                        <div class="col-3">
+                            <span id="price">&pound;33.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total">
+                    <div class="row">
+                        <div class="col-9"></div>
+                        <div class="col-3"><big>&pound;262.99</big></div>
+                    </div>
+                </div>
+                <div class="tracking">
+                    <div class="title">Tracking Order</div>
+                </div>
+                <div class="progress-track">
+                    <ul id="progressbar">
+                        <li class="step0 active " id="step1">Ordered</li>
+                        <li class="step0 active text-center" id="step2">Shipped</li>
+                        <li class="step0 active text-right" id="step3">On the way</li>
+                        <li class="step0 text-right" id="step4">Delivered</li>
+                    </ul>
+                </div>
+                
+    
+                <div class="footer">
+                    <!-- <div class="row">
+                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/YBWc55P.png"></div>
+                        <div class="col-10">Want any help? Please &nbsp;<a> contact us</a></div>
+                    </div> -->
+                    
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- '#36A2EB', -->
+<script>
+    const ctx = document.getElementById('myChart');
+    
+    const labels = {{ month|safe }}
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Orders',
+          data: {{ total_orders|safe }},
+          borderWidth: 1,
+          borderColor: '#1c1c50' ,
+          backgroundColor: '#1c1c50',
+        }]
+      },
+  
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  
+{% endblock %}

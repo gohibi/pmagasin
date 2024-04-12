@@ -1,0 +1,313 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<head>
+  <style>
+    input[type="range"]{
+      /* -webkit-appearance: none; */
+      margin-right: 25px;
+      height: 7px;
+      background: rgba(255, 255,255,0.6);
+      border-radius: 5px;
+      background-image: linear-gradient(#1c1c50,#1c1c50);
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #1c1c50;
+      cursor:ew-resize;
+      box-shadow: 0 0 2px 0 #555;
+      transition: background .3S ease-in-out;
+
+    }
+    input[type="range"]::-webkit-slider-runnable-track{
+      -webkit-appearance: none;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+    }
+
+
+  </style>
+</head>
+
+<main class="container main bg-primary" role="main">
+    <h3></h3>
+    <form action="{% url 'core:products' %}" method="get" id="form_search">
+        <div class="row g-3 no-gutters align-items-center text-white">
+          <!-- {{ form.as_p }} -->
+            <div class="col-6">
+              <label for="inputProduct" class="form-label text-white fw-bold text-capitalize">produit ou categorie</label>
+              {{form.title}}
+              <input type="search" name="recherche" id="product" placeholder="Recherche par produit ou categorie" class="form-control form-control-borderless">
+            </div>   
+            <div class="col-3">
+               <label for="inputMin" class="form-label text-white fw-bold text-capitalize">Min</label>
+              <input type="number" min="0" class="form-control" id="min" placeholder="0 Fcfa" aria-label="Minimum" name="min">
+            </div>
+            <div class="col-3">
+                <label for="inputMax" class="form-label text-white fw-bold text-capitalize">Max</label> 
+              <input type="number" min="0" class="form-control" id="max" placeholder="1000000 Fcfa" aria-label="Maximum" name="max">
+            </div>
+             <div class="col-2">
+                <label for="inputDebut" class="form-label text-white fw-bold text-capitalize">Date debut</label>
+                <input type="date" class="form-control" id="inputDebut" name="debut">
+            </div>
+            <div class="col-2">
+              <label for="inputEnd" class="form-label text-white fw-bold text-capitalize">Date fin</label>
+              <input type="date" class="form-control" id="inputEnd" name="end">
+          </div>
+          </div>
+          <div class="col-12 py-3">
+            <button class="btn btn-md btn-success search-btn" type="submit">Recherche</button>
+        </div> 
+    </form>
+</main>
+
+
+<div class="container-fluid" style="z-index: 99999;">
+  <div class="container-fluid mb-3">
+    <div class="row">
+      <div class="col-md-12 bg-light border-bottom">
+        <div class="container">
+          <div class="row">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-3">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">Categories</div>
+          <div class="list-group list-group-flush">
+            {% for c in cat %}
+            <ul class="list-group list-group-light">
+              <li class="list-group-item">
+                <input class="form-check-input filter-checkbox" data-filter="category" name="checkbox" type="checkbox" value="{{c.id}}" aria-label="..." />
+                <a href="" class="text-decoration-none list-group-item-action fw-bold">{{c.title}} ({{c.categorie.count }})</a>
+              </li>            
+            </ul>
+            {% endfor %} 
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header text-white bg-primary">Filter</div>
+          <div class="card-body p-1">
+            <div class="card border-0 b-3">
+              <!-- <div class="card-header p-2 bg-white " data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false">
+                <p class="m-0 h6">Price</p>
+                <input type="range" name="rangex" id="range" class="form-control slider-range" min="{{min_max_price.price__min}}"
+                 max="{{min_max_price.price__max}}" oninput="max_price.value=this.value" value="{{min_max_price.price__min|floatformat:0}}">
+                <div class="d-flex justify-content-between">
+                  <div class="caption">De:  <strong id="slider-range-value1" class="text-brand">{{min_max_price.price__min|floatformat:0}}</strong></div>
+                  <div class="caption">A:  <strong id="slider-range-value2" class="text-brand">{{min_max_price.price__max |floatformat:0}}</strong></div>
+                </div>
+                <input type="number" value="{{min_max_price.price__min|floatformat:0}}" class="form-control" name="" id="max_price" min="{{min_max_price.price__min}}" max="{{min_max_price.price__max}}" placeholder="prix" onkeyup="range.value=this.value">
+              </div> -->
+              <!-- <div class="card-body p collapse show" id="collapseExample4">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Min</label>
+                    <input class="form-control" placeholder="" type="number" name="min">
+                  </div>
+                  <div class="form-group text-right col-md-6">
+                    <label>Max</label>
+                    <input class="form-control" placeholder="" type="number" name="max">
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-block btn-primary" id="price-filter-btn">Filter</button>
+          
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        {% if products %}
+        <div class="card">
+          <div class="card-header bg-primary">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="btn-group" role="group">
+                </div>
+              </div>
+            </div>
+          </div>
+         
+          <div class="card-body">
+            <div class="row" id="filtered-product">
+            {% for product in products %}
+              <div class="col-md-4 mb-4">
+                <div class="card">
+                  <img class="card-img-top" src="{{ product.image.url }}"  alt="" />
+                  <div class="card-body">
+                    <p class="h6"><small class="text-muted"></small></br>{{product.title}}</p>
+                    <p class="m-0 text-muted">{{product.category.title}}</p>
+                    <p class="m-0">
+                      <i class="fa-xs far fa-star"></i>
+                      <i class="fa-xs far fa-star"></i>
+                      <i class="fa-xs far fa-star"></i>
+                      <i class="fa-xs far fa-star"></i>
+                      <i class="fa-xs far fa-star"></i>
+                    </p>
+                    <p class="h5 m-0">{{product.price}} Fcfa</p>
+                  </div>
+                  <div class="card-footer p-0">
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-light">
+                        <i class="fas fa-cart-plus"></i>
+                        
+                      </button>
+                      <!-- <button type="button" class="btn btn-light">
+                        <i class="fas fa-shopping-cart"></i>
+                      </button>
+                      <button type="button" class="btn btn-light">
+                        <i class="fas fa-heart"></i>
+                      </button> -->
+                      <button type="button" class="btn btn-light">
+                        <a class="text-decoration-none text-capitalize"   href="{% url 'core:detail-product' slug=product.slug pid=product.pid %}">details</a>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="card-footer footer-hide p-3">
+            <div class="row">
+              <div class="col-md-6">
+                <ul class="pagination m-0">
+                    {% if products.has_previous %}
+                  <li class="page-item">
+                    <!-- <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a> -->
+                    <a href="?page={{products.previous_page_number}}" class="page-link text-decoration-none text-uppercase">Précédent</a>
+                  </li>
+                  {% endif %}
+
+                  {% for i in products.paginator.page_range %}
+                    {% if products.number == i %}
+                    <li class="page-item"><a class="page-link" href="#">{{i}}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                    {% endif%}
+                  {% endfor %}
+
+                  {% if products.has_next %}
+                  <li class="page-item">
+                    
+                    <a href="?page={{products.next_page_number}}" class="page-link text-decoration-none text-uppercase">Suivant</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+              <!-- <div class="col-md-6">
+                <p class="text-right mb-0 mt-1">Showing 1 to 12 of 12 (1 Pages)</p>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <br><br><br><br><br><br><br>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>         
+    <div style="color: #575757; font-style: bold; font-size: 1.5rem; text-align: center;">Aucun produit correspond à votre recherche...</div>
+    {% endif %}
+   
+  
+   
+  </div>
+  
+
+<!-- {% if products %}
+<div class="container" id="product-cards">
+        <div class="row" style="margin-top: 30px;">
+            {% for p in products %}
+            <div class="col-md-3 py-3 mb-4 py-md-0">
+                <div class="card">
+                    
+                    
+                   <img src="{{p.image.url}}" alt="">
+                    <div class="card-body">
+                        <h3><a href="{% url 'core:detail-product' slug=p.slug pid=p.pid %}" class="text-decoration-none">{{p.title}}</a></h3>
+                        
+                        <p>{{p.description}}</p>
+                        <div class="star">
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                        </div>
+                        <h5>Fcfa {{p.price}} <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
+                    </div>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 offset-md-4">
+          <ul class="pagination">
+              {% if products.has_previous %}
+              <li class="page-item">
+                  <a href="?page={{products.previous_page_number}}" class="page-link text-decoration-none text-uppercase">Précédent</a>
+              </li>
+              {% endif %}
+  
+              <li class="page-item active">
+                  <a href="" class="page-link">{{products.number}}</a>
+              </li>
+  
+              {% if products.has_next %}
+              <li class="page-item">
+                  <a href="?page={{products.next_page_number}}" class="page-link text-decoration-none text-uppercase">Suivant</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+    {% else %}
+    <br><br><br><br><br><br><br>
+    <div style="color: #575757; font-style: bold; font-size: 1.5rem; text-align: center;">Aucun produit correspond à votre recherche...</div>
+  {% endif %}
+    -->
+    <div class="container" id="offer">
+        <div class="row offer">
+            <div class="col-md-4 py-3 py-md-0">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h5>Free Shipping</h5>
+                <p>On order over $100</p>
+            </div>
+            <div class="col-md-4 py-3 py-md-0">
+                <i class="fa-solid fa-truck"></i>
+                <h5>Fast Delivery</h5>
+                <p>World wide</p>
+            </div>
+            <div class="col-md-4 py-3 py-md-0">
+                <i class="fa-solid fa-thumbs-up"></i>
+                <h5>Big Choice</h5>
+                <p>Of product</p>
+            </div>
+        </div>
+    </div> 
+
+
+{% endblock %}

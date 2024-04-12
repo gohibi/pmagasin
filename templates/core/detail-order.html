@@ -1,0 +1,108 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+</head>
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-4 pb-5">
+            <!-- Account Sidebar -->
+            <div class="author-card pb-3">
+                <!-- Replace the background image and avatar image URLs with your own -->
+                <div class="author-card-cover bg-primary">
+                    <!-- <a class="btn btn-style-1 btn-white btn-sm" href="#" data-toggle="tooltip" title="" data-original-title="You currently have 290 Reward points to spend">
+                         <i class="fa fa-award text-md"></i>&nbsp;290 points
+                    </a> -->
+                </div>
+                <div class="author-card-profile">
+                    <div class="author-card-avatar">
+                        <img src="{% static 'assets/img/profile.png' %}" alt="{{request.user.username}}">
+                    </div>
+                    <div class="author-card-details">
+                        <h5 class="author-card-name text-lg ">{{request.user.username|capfirst}}</h5>
+                        <span class="author-card-position">Joined {{request.user.date_joined|date:"d M Y  G:i"}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar Navigation -->
+            <div class="wizard">
+                <nav class="list-group list-group-flush">
+                    <a class="list-group-item " href="#dashboard">Dashboard</a>
+                    <a class="list-group-item" href="#orders">Orders List</a>
+                    <a class="list-group-item" href="{% url 'authusers:deconnexion' %}">Logout</a>
+                    <a class="list-group-item text-muted" href="{% url 'core:dashboard' %}"><i class="fa-sharp fa-solid fa-arrow-left"></i>retour dashboard</a>
+                   
+                </nav>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-lg-8 pb-5">
+            <div class="content active" id="dashboard">
+                <div class="card" style="width: auto;">
+                    <div class="card-header">
+                        <h3 class="mb-0">Hello {{request.user.username }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                            Quaerat dicta commodi eveniet labore architecto voluptatum eaque rem <br>
+                             consequuntur alias, quae tempore ullam tempora ipsum ipsa id? Cum aspernatur 
+                             quae quasi.</p>
+                    </div>
+                </div>
+              
+            </div>
+
+            <div class="content" id="orders">
+                <!-- Orders List Content -->
+                <!-- Replace the table content with your own -->
+                <!-- <div class="d-flex justify-content-end pb-3">
+                    <div class="form-inline">
+                        <label class="text-muted mr-3" for="order-sort">Sort Orders</label>
+                        <select class="form-control" id="order-sort">
+                            <option>All</option>
+                            <option>Delivered</option>
+                            <option>In Progress</option>
+                            <option>Delayed</option>
+                            <option>Canceled</option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Order INV</th>
+                                <th>Image</th>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in products %}
+                            <tr>
+                                <td>INV-{{p.id}}</td>
+                                <td>
+                                    <img src="{% static '{{p.image}}' %}" alt="" style="width: 60px; height: 60px;">
+                                </td> 
+                                <td>{{p.item}}</td>
+                                <td>{{p.price}} fcfa</td>
+                                <td>{{p.quantity}}</td>
+                                <td>{{p.total}} fcfa</td>
+                            </tr>
+                         {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+    <!-- banner -->
+    <div class="container-fluid bg-light py-5">
+        <h1 class="text-center text-dark display-6">{{tag.name}}</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Accueil</a></li>
+            <li class="breadcrumb-item active ">{{tag.name}}</li>
+        </ol>
+    </div>
+    <!-- banner -->
+
+    <div class="container" id="product-cards">
+        <div class="row" style="margin-top: 30px;">
+            {% for p in products %}
+            <div class="col-md-3 py-3 mb-4 py-md-0">
+                <div class="card">
+                    
+                    <img src="{{p.image.url}}" alt="">
+                    <div class="card-body">
+                        <h3>{{p.title}}</h3>
+                        <p>{{p.description}}</p>
+                        <div class="star">
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                            <i class="fas fa-star checked"></i>
+                        </div>
+                        <h5>{{p.price}}Fcfa <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
+                    </div>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- offer -->
+    <div class="container" id="offer">
+        <div class="row">
+            <div class="col-md-4 py-3 py-md-0">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h5>Free Shipping</h5>
+                <p>On order over $100</p>
+            </div>
+            <div class="col-md-4 py-3 py-md-0">
+                <i class="fa-solid fa-truck"></i>
+                <h5>Fast Delivery</h5>
+                <p>World wide</p>
+            </div>
+            <div class="col-md-4 py-3 py-md-0">
+                <i class="fa-solid fa-thumbs-up"></i>
+                <h5>Big Choice</h5>
+                <p>Of product</p>
+            </div>
+        </div>
+    </div>
+<!-- offer -->
+
+{% endblock %}

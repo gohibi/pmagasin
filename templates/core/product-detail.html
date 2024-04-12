@@ -1,0 +1,352 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+ <!-- Single Page Header start -->
+ <div class="container-fluid bg-light py-5">
+    <h1 class="text-center text-dark display-6">{{products.title}}</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="" class="text-decoration-none">Produits</a></li>
+        <li class="breadcrumb-item active ">{{products.title}}</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+<div class="separator"></div>
+
+<div class="container-fluid py-1 mt-5">
+    <div class="container py-5">
+        <div class="row g-4 mb-5">
+            <div class="col-lg-8 col-xl-9">
+                <section class="clickble_slider1">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <!-- Swiper -->
+                          <div class="row">
+                            <div class="col-md-12 px-0 py-2">
+                              <div class="swiper swiper_large_preview">
+                                <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <div class="zoom_img">
+                                      <img class="img-fluid rounded" src="{{products.image.url}}" />
+                                    </div>
+                                  </div>
+                                  {% for img in image %}
+                                  <div class="swiper-slide">
+                                    <div class="zoom_img">
+                                      <img class="img-fluid rounded" src="{{img.images.url }}" />
+                                    </div>
+                                  </div>
+                                {% endfor %}
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                              </div>
+                            </div>
+                            <div class="col-md-12 px-0 py-2">
+                              <div thumbsSlider="" class="swiper swiper_thumb">
+                                <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <div class="zoom_img">
+                                      <img class="img-fluid" src="{{products.image.url}}" />
+                                    </div>
+                                  </div>
+                                  {% for img in image %}
+                                  <div class="swiper-slide">
+                                    <div class="zoom_img">
+                                      <img class="img-fluid" src="{{img.images.url}}" />
+                                    </div>
+                                  </div>
+                                  {% endfor %}
+                                            
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                              </div>
+                            </div>
+                          </div>
+                
+                
+                        </div>
+                        <div class="col-6">
+                            <h4 class="fw-bold mb-3 text-white bg-primary w-25 px-3 rounded">-{{products.get_precent|floatformat:0}}%</h4>
+                            <h4 class="fw-bold mb-3">{{products.title}}</h4>
+                            <p class="mb-3">{{products.category}}</p>
+                            <div class="d-flex mb-4">
+                                <h5 class="fw-bolder mb-3 current-product-price-{{products.id}}" id="current-product-price-{{products.id}}">{{products.price}}</h5><span class="mx-1">Fcfa</span>
+                                <h5 class="fw-bold my-1 px-2 fs-6 text-danger text-decoration-line-through">{{products.old_price}} <small>Fcfa</small></h5>
+                            </div>
+                            
+                            <!-- <div class=""> 
+                                <p class="mb-3">
+                                    {% for tag in products.tags.all %}<a href="# ">#{{tag.name}}</a>,{% endfor %}
+                                </p>
+                            </div> -->
+                            
+                            <div class="d-flex mb-4">
+                                <!-- <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star"></i> -->
+                                 {{ avg.rating|floatformat:1}} sur 5.0
+                               
+                            </div>
+                            <p class="mb-4">{{products.description}}</p>
+                            <!-- <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p> -->
+                            <div class="input-group quantity mb-5" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <input type="number" class="form-control form-control-sm text-center border-0 product-quantity-{{products.id}}" value="1" min="1" id="product-quantity">
+                                </div>
+
+                                <!-- <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div> -->
+                            </div>
+                            <input type="hidden" class="product-pid-{{products.id}}"    value="{{ products.pid }}">
+                            <input type="hidden" class="product-image-{{ products.id}}" value="{{ products.image.url }}" >
+                            <input type="hidden" class="product-title-{{ products.id}}" value="{{ products.title }}" >
+                            <input type="hidden" class="product-id-{{ products.id}}"    value="{{ products.id }}" >
+                            <!-- <input type="hidden" value="{{products.id}}" class="product-id" name="" id="">
+                            <input type="hidden" value="{{products.title}}" class="product-title" name="" id="" > -->
+                            <button type="button"  data-index="{{products.id}}" id="add-to-cart-btn" class="add-to-cart-btn btn border border-secondary bg-primary rounded-pill px-4 py-2 mb-4 text-light"><i class="fa fa-shopping-bag me-2 text-light"></i> Add to cart</button>
+                        </div>
+                        <div class="col-lg-12">
+                            <nav>
+                                <div class="nav nav-tabs mb-3">
+                                    <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                        id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
+                                        aria-controls="nav-about" aria-selected="true">Description</button>
+                                    <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                        id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                        aria-controls="nav-mission" aria-selected="false">Reviews({{reviews.count}})</button>
+                                </div>
+                            </nav>
+                            <div class="tab-content mb-5">
+                                <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                    <p></p>
+                                    <!-- <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
+                                        icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p> -->
+                                    <div class="px-2">
+                                        <div class="row g-4">
+                                            <div class="col-6">
+                                                <div class="row bg-light align-items-center text-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">Date</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0">{{products.date|date:"d M Y  G:i"}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">Code tracking</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0">{{products.sku}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">Tags</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0">{% for tag in products.tags.all %}<a href="{% url 'core:tags' tag.slug %}" class="text-decoration-none text-success">#{{tag.name}}</a>,{% endfor %}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">Garantie</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0">{{products.life}} jour{{products.life|pluralize}} </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row bg-light text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">En stock</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0">{{products.stock_count}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">Specifications</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0">{{products.specifications}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6"><p class="mb-0"></p>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="row bg-light text-center align-items-center justify-content-center py-2">
+                                                    <div class="col-6">
+                                                        <p class="mb-0">Fournisseur</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-0"></p>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                                    {% for review in reviews %}
+                                    <div class="d-flex">
+                                        <img src="{% static 'assets/img/profile.png' %}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                                        <div class="">
+                                            
+                                            
+                                            <p class="mb-2" style="font-size: 14px;">{{review.date|date:"d M Y  G:i"}}</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>{{review.user.username|title}}</h5>
+                                                <!-- <div class="d-flex mb-3">
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div> -->
+                                            </div>
+                                            <p>{{review.review}}</p>
+
+                                            
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    
+                                    <!-- <div class="d-flex">
+                                        <img src="{% static 'img/avatar.jpg' %}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Sam Peters</h5>
+                                                <div class="d-flex mb-3">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
+                                                words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                        </div>
+                                    </div> -->
+                                    <p class="text-success" id="review-success"></p>
+                                    <form method="POST" action="{% url 'core:add-review' slug=products.slug pid=products.pid %}" id="formComment" class="comment-form-hide">
+                                        {% csrf_token %}
+                                        <h4 class="mb-1 fw-bold add-review">Add review</h4>
+                                        
+                                        <div class="row g-4">
+                                            <div class="col-lg-12">
+                                                <div class="border-2 rounded my-4"> 
+                                                    <p class="mb-0 me-3">Review </p>
+                                                     {{form_review.review}}
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="d-flex justify-content-between py-3 mb-5">
+                                                    <div class="d-flex align-items-center">
+                                                        <p class="mb-0 me-3">Please rate: </p>
+                                                        {{form_review.rating}}
+                                                        
+                                                    </div>
+                                                    <button type="submit" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="nav-vision" role="tabpanel">
+                                    <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
+                                        amet diam et eos labore. 3</p>
+                                    <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
+                                        Clita erat ipsum et lorem et sit</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </section>
+            </div>
+            <div class="col-lg-4 col-xl-3">
+                <div class="row g-4 fruite">
+                    <div class="col-lg-12">
+                        <div class="input-group w-100 mx-auto d-flex mb-4">
+                            <input type="search" class="form-control p-3" placeholder="Mots-clés" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                        <div class="mb-4">
+                            <h4>Categories</h4>
+                           
+                            <ul class="list-unstyled fruite-categorie">
+                                
+                                <li>
+                                    <div class="d-flex justify-content-between fruite-name">
+                                        <a href="" ><img src="{{products.category.image.url }}" width="50" height="50"></a>
+                                        <span>{{products.category.title }}</span>
+                                    </div>
+                                </li>
+                              
+                            </ul>
+                           
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <h4 class="mb-4">Featured products</h4>
+                        {% for cp in cproducts %}
+                        <div class="d-flex align-items-center justify-content-start">
+                            
+                            <div class="rounded" style="width: 100px; height: 100px;">
+                                <img src="{{cp.image.url}}" class="img-fluid rounded" alt="Image">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">{{cp.title}}</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">{{cp.price}}</h5>
+                                    <h5 class="text-danger text-decoration-line-through">{{cp.old_price}}</h5>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        {% endfor %}
+                      
+                    </div>
+                    <!-- <div class="col-lg-12">
+                        <div class="position-relative">
+                            <img src="{% static 'img/banner-fruits.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                            <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
