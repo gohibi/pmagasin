@@ -491,3 +491,6 @@ def remove_wishlist(request):
             'wishjson':wishlist_json,
         }
     )
+
+def contact(request):
+    return render(request,'core/contact.html')
